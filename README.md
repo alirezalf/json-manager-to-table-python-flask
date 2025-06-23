@@ -112,7 +112,7 @@ README.md          # توضیحات پروژه
 ## 📩 ارتباط با من | Contact Me
 
 - GitHub: [github.com/alirezalabbaf](https://github.com/alirezalabbaf)
-- ایمیل: [alirezalabbaf.dev@gmail.com](mailto:alirezalabbaf.dev@gmail.com)
+- ایمیل: [alirezalf@gmail.com](mailto:alirezalabbaf.dev@gmail.com)
 
 ---
 
