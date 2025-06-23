@@ -96,7 +96,6 @@ http://127.0.0.1:5000/
 ```
 /uploads           # ذخیره‌ فایل‌های آپلود شده
 /templates         # فایل‌های HTML
-/static            # فایل‌های CSS/JS (در صورت وجود)
 app.py             # فایل اصلی Flask
 requirements.txt   # لیست پکیج‌ها
 README.md          # توضیحات پروژه
