@@ -1,0 +1,19 @@
+[
+    {
+      "name": "علی",
+      "info": {
+        "age": 25,
+        "skills": ["Python", "Flask"]
+      },
+      "active": true
+    },
+    {
+      "name": "زهرا",
+      "info": {
+        "age": 30,
+        "skills": ["HTML", "CSS", "JavaScript"]
+      },
+      "active": false
+    }
+  ]
+  

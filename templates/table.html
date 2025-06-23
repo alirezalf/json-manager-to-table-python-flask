@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>جدول داده‌های JSON</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css"
+    />
+
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        font-family: "Tahoma", sans-serif;
+        background-color: #f8f9fa;
+      }
+
+      .page-wrapper {
+        display: flex;
+        flex-direction: column;
+
+        padding: 20px;
+      }
+
+      .table-container {
+        flex: 1;
+        overflow: hidden;
+      }
+
+      table th,
+      table td {
+        white-space: nowrap;
+      }
+
+      pre {
+        text-align: left;
+        direction: ltr;
+      }
+      table.dataTable thead .sorting::before,
+      table.dataTable thead .sorting::after,
+      table.dataTable thead .sorting_asc::before,
+      table.dataTable thead .sorting_asc::after,
+      table.dataTable thead .sorting_desc::before,
+      table.dataTable thead .sorting_desc::after {
+        color: black !important; /* یا رنگی دیگر برای کنتراست بهتر */
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <h4 style="text-align: right" class="mb-4">جدول اطلاعات فایل JSON</h4>
+      {% with messages = get_flashed_messages() %} {% if messages %}
+      <div class="alert alert-info">
+        {% for message in messages %}
+        <div>{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %} {% endwith %} {% if error %}
+      <div class="alert alert-danger">{{ error }}</div>
+      {% endif %} {% if data %}
+      <div class="table-container">
+        <table
+          id="jsonTable"
+          class="table table-bordered table-striped table-sm"
+          style="width: 100%"
+        >
+          <thead class="bg-info text-white">
+            <tr>
+              {% for h in headers %}
+              <th class="text-right">{{ h }}</th>
+              {% endfor %}
+              <th class="text-right">نمایش JSON</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in data %}
+            <tr>
+              {% for h in headers %}
+              <td>{{ row.get(h, '') }}</td>
+              {% endfor %}
+              <td>
+                <button
+                  class="btn btn-sm btn-info"
+                  data-toggle="modal"
+                  data-target="#jsonModal{{ loop.index0 }}"
+                >
+                  مشاهده
+                </button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      {% for item in pretty_json_list %}
+      <div
+        class="modal fade"
+        id="jsonModal{{ loop.index0 }}"
+        tabindex="-1"
+        role="dialog"
+      >
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">نمایش JSON</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="بستن"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <pre>{{ item | e }}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %} {% else %}
+      <div class="alert alert-warning">داده‌ای برای نمایش موجود نیست.</div>
+      {% endif %}
+    </div>
+    <a
+      href="{{ url_for('index') }}"
+      class="ml-3 btn btn-secondary mt-3 d-inline-block"
+      >بازگشت</a
+    >
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#jsonTable").DataTable({
+          scrollY: "60vh",
+          scrollX: true,
+          scrollCollapse: true,
+          paging: true,
+          autoWidth: false,
+          language: {
+            search: "جستجو:",
+            lengthMenu: "نمایش _MENU_ ردیف",
+            info: "نمایش _START_ تا _END_ از _TOTAL_ ردیف",
+            paginate: {
+              first: "اول",
+              previous: "قبلی",
+              next: "بعدی",
+              last: "آخر",
+            },
+            zeroRecords: "داده‌ای یافت نشد",
+            infoEmpty: "بدون داده",
+            infoFiltered: "(فیلتر شده از _MAX_ ردیف)",
+          },
+        });
+      });
+    </script>
+  </body>
+</html>
